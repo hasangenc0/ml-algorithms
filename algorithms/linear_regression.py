@@ -10,7 +10,7 @@ class LinearRegression:
 
     def fit(self, x, y):
         """
-                Fit the training data
+        Fit the training data
         Parameters
         ----------
         x: array
