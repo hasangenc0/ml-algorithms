@@ -1,0 +1,2 @@
+age,workclass,fnlwgt,education,educational-num,marital-status,occupation,relationship,race,gender,capital-gain,capital-loss,hours-per-week,native-country,income
+20,Private,265802,Some-college,14,Never-married,Software-Developer,Unmarried,White,Male,0,0,40,Turkey,unknown
