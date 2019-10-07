@@ -46,6 +46,7 @@ class KNClassifier:
             if titles:
                 del dataset[0]
 
+            self.trainingSet = self.dataSet
             self.testSet = [[] for i in range(len(dataset))]
             for c, data in enumerate(dataset):
                 for i, value in enumerate(data):
@@ -85,8 +86,10 @@ class KNClassifier:
         class_votes = {}
         for _, neighbor in enumerate(neighbors):
             response = neighbor[-1]
-            class_votes[response] = class_votes[response] + 1 if response in class_votes else 1
-        sorted_votes = sorted(class_votes.items(), key=operator.itemgetter(1), reverse=True)
+            class_votes[response] = class_votes[response] + \
+                1 if response in class_votes else 1
+        sorted_votes = sorted(class_votes.items(),
+                              key=operator.itemgetter(1), reverse=True)
         return sorted_votes[0][0]
 
     def get_accuracy(self):
