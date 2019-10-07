@@ -31,49 +31,44 @@ class KNClassifier:
 
     def euclideanDistance(self, instance1, instance2, length):
         distance = 0
-        for x in range(length):
-            distance += pow((instance1[x] - instance2[x]), 2)
+        for i in range(length):
+            distance += pow((instance1[i] - instance2[i]), 2)
         return math.sqrt(distance)
 
     def getNeighbors(self, trainingSet, testInstance, k):
         distances = []
         length = len(testInstance)-1
-        for x in range(len(trainingSet)):
-            dist = self.euclideanDistance(testInstance, trainingSet[x], length)
-            distances.append((trainingSet[x], dist))
+        for _, data in enumerate(trainingSet):
+            dist = self.euclideanDistance(testInstance, data, length)
+            distances.append((data, dist))
         distances.sort(key=operator.itemgetter(1))
         neighbors = []
-        for x in range(k):
-            neighbors.append(distances[x][0])
+        for i in range(k):
+            neighbors.append(distances[i][0])
         return neighbors
 
     def getResponse(self, neighbors):
         classVotes = {}
-        for x in range(len(neighbors)):
-            response = neighbors[x][-1]
-            if response in classVotes:
-                classVotes[response] += 1
-            else:
-                classVotes[response] = 1
-        sortedVotes = sorted(classVotes.items(),
-                             key=operator.itemgetter(1), reverse=True)
+        for _, neighbor in enumerate(neighbors):
+            response = neighbor[-1]
+            classVotes[response] = classVotes[response] + 1 if response in classVotes else 1
+        sortedVotes = sorted(classVotes.items(), key = operator.itemgetter(1), reverse=True)
         return sortedVotes[0][0]
 
     def getAccuracy(self):
         correct = 0
-        for x in range(len(self.testSet)):
-            if self.testSet[x][-1] == self.predictions[x][0]:
+        for i in range(len(self.testSet)):
+            if self.testSet[i][-1] == self.predictions[i][0]:
                 correct += 1
         return (correct / float(len(self.testSet))) * 100.0
 
     def predict(self, k):
         self.predictions = []
-        for x in range(len(self.testSet)):
-            neighbors = knn.getNeighbors(self.trainingSet, self.testSet[x], k)
+        for _, data in enumerate(self.testSet):
+            neighbors = knn.getNeighbors(self.trainingSet, data, k)
             result = knn.getResponse(neighbors)
-            self.predictions.append([result, self.testSet[x][-1]])
+            self.predictions.append([result, data[-1]])
         return self.predictions
-
 
 if __name__ == "__main__":
     knn = KNClassifier()
