@@ -22,7 +22,14 @@ def adult_data_knn_predict():
     for x in predictions:
         print('> predicted=' + repr(x[0]), '> actual=' + repr(x[1]))
 
+def imdb_data_knn_predict():
+    knn = KNClassifier()
+    knn.load_dataset('data/imdb.csv', label=2, batch=1, titles=True)
+    knn.load_data_for_predict('data/unpredicted_imdb.csv', titles=True)
+    predictions = knn.predict(k=3)
+    for x in predictions:
+        print('> predicted=' + repr(x[0]), '> actual=' + repr(x[1]))
+
 
 if __name__ == "__main__":
-    adult_data_knn_accuracy()
-    adult_data_knn_predict()
+    imdb_data_knn_predict()

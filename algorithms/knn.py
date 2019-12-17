@@ -3,7 +3,6 @@ import random
 import math
 import operator
 
-
 class KNClassifier:
 
     def __init__(self):
